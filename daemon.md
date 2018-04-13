@@ -54,17 +54,22 @@ alive in total, by using `sleep` and `fork`:
 
 ```c
 int main() {
-  long long i = 0;
+  long i = 0;
   while (1) {
+    // Wait for one second
     sleep(1);
+
+    // Call fork()
     pid_t ret = fork();
     if (ret == -1) {
+      //An error occured
       printf("Error!\n");
       exit(1);
     } else if (ret == 0) {
+      // Child process: continues to live for one more cycle.
       printf("I am live for %d seconds.\n", i++);
     } else {
-      // Parent exits out of program
+      // Parent exits out of program, child becomes new parent process.
       exit(0);
     }
   }
